@@ -1,12 +1,13 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 
 import "./app.css";
 import {DatePicker} from 'antd';
 import Header from "../header/header";
 import SearchForm from "../search-form/search-form";
 import SwapiService from "../../services/swapi-service";
+import {SwapiServiceProvider} from '../swapi-service-context/swapi-service-context'
 
-export default class App extends Component {
+export default class App extends PureComponent {
   maxId = 100;
 
   // constructor(props) {
@@ -77,6 +78,7 @@ export default class App extends Component {
 
     return (
       <section className="container">
+        <SwapiServiceProvider value={this.swapiService}>
         <header className="header">
           <Header arrMovies={arrMovies} loading={loading} error={error} addItem={this.addItem} guestSessionId={this.state.guestSessionId}/>
 
@@ -89,6 +91,7 @@ export default class App extends Component {
           {/*    onToggleDone={this.onToggleDone}*/}
           {/*/>*/}
         </section>
+        </SwapiServiceProvider>
       </section>
     );
   }

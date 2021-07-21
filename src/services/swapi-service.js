@@ -64,4 +64,15 @@ export default class SwapiService {
     return arr;
   }
 
+  async getAllGenres() {
+
+    const result = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=864cd2acdebdfd281550947ea6066439`);
+    if (!result.ok) {
+      throw new Error(`Could not fetch , received ${result.status}`)
+    }
+    const arr = await result.json();
+    console.log(arr)
+    return arr;
+  }
+
 }

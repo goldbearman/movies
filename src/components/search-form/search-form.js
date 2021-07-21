@@ -19,24 +19,13 @@ export default class SearchForm extends Component {
         }
     };
 
-
     onLabelChange =  this.debounce((e)=> {
         e.preventDefault();
         if (e.target.value !== undefined && e.target.value.trim() !== "") {
             this.props.onItemAdded(e.target.value);
         }
-
-
         console.log(e.target.value);
     },500)
-
-    // onSubmit = (e) => {
-    //     e.preventDefault();
-    //     if (this.state.label !== undefined && this.state.label.trim() !== "") {
-    //         // eslint-disable-next-line react/prop-types
-    //         this.debounce(this.props.onItemAdded(this.state.label), 500);
-    //     }
-    // };
 
     render() {
         return (
