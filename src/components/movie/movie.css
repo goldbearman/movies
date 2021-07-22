@@ -60,15 +60,17 @@
 }
 
 .genre {
-    margin-bottom: 9px;
+    /*margin-bottom: 9px;*/
 }
 
 .card__content .genre button {
-    padding: 0 2px;
+    padding: 0 4px;
     border: 1px solid #D9D9D9;
     border-radius: 2px;
     background-color: #FAFAFA;
     color: #575757;
+    margin-right: 8px;
+    margin-bottom: 8px;
 }
 
 .card__content p {
