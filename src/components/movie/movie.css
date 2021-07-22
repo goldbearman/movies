@@ -91,3 +91,13 @@
 .ant-rate-star:not(:last-child) {
     margin-right: 5px;
 }
+
+.ant-pagination-item-active {
+    font-weight: 500;
+    background: #1890ff;
+    border-color: #1890ff;
+}
+
+.ant-pagination-item-active a {
+    color: white;
+}

@@ -71,6 +71,17 @@ export default class Movie extends PureComponent {
         this.swapiService.postRate(stars, this.props.movie.id, this.props.guestSessionId).then(result => console.log(result))
     }
 
+
+    checkDate(releaseDate) {
+        let date;
+        try {
+            let date = format(new Date(releaseDate), 'MMMM dd, yyyy');
+        } catch (e) {
+            let date = "";
+        }
+        return date;
+    }
+
     render() {
 
         const {
@@ -85,7 +96,7 @@ export default class Movie extends PureComponent {
             }
         } = this.props
 
-        let date = format(new Date(release_date), 'MMMM dd, yyyy');
+
 
         return (
             <Col span={12}>
@@ -97,7 +108,7 @@ export default class Movie extends PureComponent {
                             <div>{vote_average}</div>
                         </div>
                         <h1>{original_title}</h1>
-                        <div className="date">{date}</div>
+                        <div className="date">{this.checkDate(release_date)}</div>
                         <Genres allGenres={this.state.allGenres} movieGenres={genre_ids}/>
                         <p>
                             {this.trimText(overview)}

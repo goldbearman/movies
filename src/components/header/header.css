@@ -20,3 +20,10 @@
     justify-content: center;
     margin: 40px 0;
 }
+
+.ant-pagination-item{
+    border: none;
+}
+.ant-pagination-item-link{
+    border: 1px solid white;
+}

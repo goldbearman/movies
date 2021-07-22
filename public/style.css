@@ -38,14 +38,19 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
+    background: #F7F7F7;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    line-height: 1.4em;
-    background: #e5e5e5;
-    color: #000000;
-    margin: 0 auto;
-    font-weight: 300;
+/*body {*/
+/*    font-family: 'Inter', sans-serif;*/
+/*    font-size: 14px;*/
+/*    line-height: 1.4em;*/
+/*    !*background: #ffffff;*!*/
+/*    background-color: #F7F7F7;*/
+/*    color: #000000;*/
+/*    margin: 0 auto;*/
+/*    font-weight: 300;*/
+/*}*/
+#root {
+    background: #F7F7F7;
 }
