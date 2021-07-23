@@ -15,8 +15,8 @@ export default class SwapiService {
     return await res.json();
   }
 
-  async getSearchMovies(query='return') {
-    const res = await this.getResource(`/3/search/movie?api_key=864cd2acdebdfd281550947ea6066439&query=${query}`);
+  async getSearchMovies(query='return',page=1) {
+    const res = await this.getResource(`/3/search/movie?api_key=${this._apiKey}&query=${query}&page=${page}`);
 
     return res.results;
   }

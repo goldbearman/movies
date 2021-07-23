@@ -88,6 +88,7 @@
     font-size: 17px;
 }
 
+
 .ant-rate-star:not(:last-child) {
     margin-right: 5px;
 }
@@ -100,4 +101,9 @@
 
 .ant-pagination-item-active a {
     color: white;
+}
+
+.ant-pagination-prev .ant-pagination-item-link, .ant-pagination-next .ant-pagination-item-link{
+    border: none;
+    color: rgba(0, 0, 0, 0.85);
 }

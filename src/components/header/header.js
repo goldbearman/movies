@@ -57,6 +57,7 @@ export default class Header extends PureComponent {
   ///////////////////////////////////////////////
 
   onChange = (page) => {
+
     this.setState({
       page: page
     })
@@ -87,20 +88,22 @@ export default class Header extends PureComponent {
           <MovieList arrMovies={this.state.arrMovies} loading={loading} error={error} page={this.state.page}
                      guestSessionId={guestSessionId}/>
           <div className='pagination-container'>
-            <Pagination defaultCurrent={1} total={this.state.arrMovies.length}
-                        defaultPageSize={6}
+            <Pagination defaultCurrent={1}
+                        total={100}
+                        // PageSize={20}
                         onChange={this.onChange}/>
           </div>
           {/*Content of Tab Pane 1*/}
         </TabPane>
         <TabPane tab="Rated" key="2">
           <MovieList arrMovies={this.state.rateMovie} loading={loading} error={error} page={this.state.pageRate}
-                     guestSessionId={guestSessionId}/>
+                     guestSessionId={guestSessionId} hideOnSinglePage={true}   />
           Content of Tab Pane 2
           <div className='pagination-container'>
             <Pagination defaultCurrent={1} total={this.state.rateMovie.length}
                         defaultPageSize={6}
-                        onChange={this.onChangeRate}/>
+                        onChange={this.onChangeRate}
+                        hideOnSinglePage={true} />
           </div>
         </TabPane>
       </Tabs>

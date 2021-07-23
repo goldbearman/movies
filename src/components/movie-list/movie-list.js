@@ -46,7 +46,8 @@ console.log('createList')
       );
     });
 
-    return elements.slice((page - 1) * 6, page * 6);
+    // return elements.slice((page - 1) * 6, page * 6);
+    return elements;
   };
 
   render() {
