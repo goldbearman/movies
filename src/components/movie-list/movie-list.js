@@ -14,7 +14,8 @@ export default class MovieList extends PureComponent {
 
   state = {
     idSession: 0,
-    arrMovies:[]
+    arrMovies: [],
+    changeRateArr: []
   }
 
   componentDidMount() {
@@ -22,26 +23,40 @@ export default class MovieList extends PureComponent {
     // this.setArrMovies();
   }
 
-  // setArrMovies(){
-  //   this.setState({
-  //     arrMovies: this.props.arrMovies
-  //   })
-  // }
+  setChangeRateArr = (obj) => {
+    console.log(obj)
+    // console.log(this.state.idSession)
+    // console.log(this.state.arrMovies)
+    // console.log(this.state.changeRateA)
+    let stateArr = this.state.changeRateArr;
+    console.log(stateArr)
+    stateArr.push(obj);
+    console.log(stateArr);
+    this.setState({
+      changeRateArr: stateArr
+    });
+  }
 
-  // componentDidUpdate(prevProps, prevState, snapshot) {
-  //   console.log(" componentDidUpdate movie-list")
-  //   if (this.props.arrMovies !== prevProps.arrMovies) {
-  //     this.setArrMovies();
-  //   }
-  // }
-
-
-  createList = (arrMovies, page, guestSessionId,getAllGenres) => {
-console.log('createList')
+  createList = (arrMovies, page, guestSessionId, getAllGenres, setChangeRateArr) => {
+    console.log('createList')
     const elements = arrMovies.map((movie) => {
+
+      this.state.changeRateArr.forEach((objIdStars) => {
+        if (movie.id === objIdStars.idRate) {
+          console.log(movie.id);
+          movie.rating = objIdStars.stars;
+        }
+      });
+
+      console.log(movie);
+      // movie.rating = stars;
+
       return (
         <Movie key={movie.id}
-               movie={movie} guestSessionId={guestSessionId} getAllGenres={getAllGenres}
+               movie={movie}
+               guestSessionId={guestSessionId}
+               getAllGenres={getAllGenres}
+               setChangeRateArr={setChangeRateArr}
         />
       );
     });
@@ -61,18 +76,18 @@ console.log('createList')
     const onErrorMessage = error ? <ErrorIndicator/> : null;
     const onSpinner = loading ? <MovieSpinner/> : null;
     // const content = hasData ?
-      //{/*<Row gutter={[38, 38]} wrap={true} className="movie-list">{this.createList(arrMovies, page, guestSessionId)}</Row> : null*/}
+    //{/*<Row gutter={[38, 38]} wrap={true} className="movie-list">{this.createList(arrMovies, page, guestSessionId)}</Row> : null*/}
 // console.log('render return')
     return (
       <SwapiServiceConsumer>
         {
-          ({getAllGenres})=>{
-            return(
+          ({getAllGenres}) => {
+            return (
               <React.Fragment>
                 {onSpinner}
                 {onErrorMessage}
                 {hasData ?
-                  <Row gutter={[38, 38]} wrap={true} className="movie-list">{this.createList(arrMovies, page, guestSessionId,getAllGenres)}</Row> : null}
+                  <Row gutter={[38, 38]} wrap={true} className="movie-list">{this.createList(arrMovies, page, guestSessionId, getAllGenres, this.setChangeRateArr)}</Row> : null}
               </React.Fragment>
             )
           }

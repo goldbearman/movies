@@ -14,10 +14,16 @@ export default class Header extends PureComponent {
 
   state = {
     page: 1,
-    pageRate:1,
+    searchItem: 'return',
+    pageRate: 1,
     rateMovie: [],
+    rateTotalResults: 0,
     arrMovies: []
   };
+
+  // componentDidMount() {
+  //   this.getRateMovies()
+  // }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.arrMovies !== prevProps.arrMovies) {
@@ -38,72 +44,102 @@ export default class Header extends PureComponent {
   swapiService = new SwapiService();
 
   getRateMovies = (activeKey) => {
-    console.log(activeKey);
-    if (activeKey === '2') {
-      console.log("in")
-      console.log(this.props.guestSessionId)
-      // this.swapiService.getRateMovie(this.props.guestSessionId)
-      this.swapiService.getRateMovie(this.props.guestSessionId)
-        .then((rateMovie) => {
-          console.log(rateMovie.results)
-          this.setState({
-            rateMovie: rateMovie.results
-          })
-        }).catch(this.onError);
-    }
+    console.log('getRateMovies');
+    // if (activeKey === '2') {
+    // console.log("in")
+    // console.log(this.props.guestSessionId)
+    // this.swapiService.getRateMovie(this.props.guestSessionId)
+    console.log(this.props.guestSessionId + " guestSessionId");
+    this.swapiService.getRateMovie(this.props.guestSessionId)
+      .then((rateMovie) => {
+        console.log(rateMovie)
+        console.log(rateMovie.total_results)
+        this.setState({
+          rateMovie: rateMovie.results,
+          rateTotalResults: rateMovie.total_results,
+          pageRate: 1
+        })
+      }).catch(this.onError);
+    // }
   }
 
 
-  ///////////////////////////////////////////////
-
   onChange = (page) => {
-
+    this.props.addItem(this.state.searchItem, page);
     this.setState({
       page: page
     })
   }
 
   onChangeRate = (pageRate) => {
-    this.setState({
-      pageRate: pageRate
-    })
+    // console.log(pageRate);
+    console.log(this.props.guestSessionId + " guestSessionId");
+    // let newRateArr = this.state.rateMovie.slice((pageRate - 1) * 20, pageRate * 20);
+    // console.log(newRateArr);
+    this.swapiService.getRateMovie(this.props.guestSessionId, pageRate)
+      .then((rateMovie) => {
+        console.log(rateMovie.results)
+        console.log(rateMovie.total_results)
+        this.setState({
+          rateMovie: rateMovie.results,
+          rateTotalResults: rateMovie.total_results,
+          pageRate: pageRate
+        })
+      }).catch(this.onError);
+
+
+    // this.setState({
+    //   pageRate: pageRate,
+    //   rateMovie:newRateArr
+    // })
   }
 
   addItem = (item) => {
+    // console.log(item);
+    this.setState({
+      searchItem: item,
+    });
     this.props.addItem(item);
   }
 
   render() {
 
-    const {loading, error, addItem, guestSessionId} = this.props;
-    console.log(this.props.arrMovies)
-    console.log(this.state.arrMovies)
-    console.log(this.state.rateMovie)
-    console.log(guestSessionId)
+    const {loading, error, guestSessionId, totalResults} = this.props;
+    // console.log(this.props.arrMovies)
+    // console.log(this.state.arrMovies)
+    // console.log(this.state.rateMovie)
+    // console.log(guestSessionId)
+    console.log(totalResults)
 
     return (
-      <Tabs defaultActiveKey="1" onChange={this.getRateMovies}>
+      <Tabs mb={10} defaultActiveKey="1" onChange={this.getRateMovies}>
         <TabPane tab="Search" key="1">
           <SearchForm onItemAdded={this.addItem}/>
           <MovieList arrMovies={this.state.arrMovies} loading={loading} error={error} page={this.state.page}
                      guestSessionId={guestSessionId}/>
           <div className='pagination-container'>
-            <Pagination defaultCurrent={1}
-                        total={100}
-                        // PageSize={20}
-                        onChange={this.onChange}/>
+            <Pagination
+              defaultCurrent={1}
+              current={this.state.page}
+              total={totalResults}
+              defaultPageSize={20}
+              showSizeChanger={false}
+              onChange={this.onChange}
+              hideOnSinglePage={true}/>
           </div>
           {/*Content of Tab Pane 1*/}
         </TabPane>
         <TabPane tab="Rated" key="2">
           <MovieList arrMovies={this.state.rateMovie} loading={loading} error={error} page={this.state.pageRate}
-                     guestSessionId={guestSessionId} hideOnSinglePage={true}   />
-          Content of Tab Pane 2
+                     guestSessionId={guestSessionId} hideOnSinglePage={true}/>
           <div className='pagination-container'>
-            <Pagination defaultCurrent={1} total={this.state.rateMovie.length}
-                        defaultPageSize={6}
-                        onChange={this.onChangeRate}
-                        hideOnSinglePage={true} />
+            <Pagination
+              defaultCurrent={1}
+              current={this.state.pageRate}
+              total={this.state.rateTotalResults}
+              defaultPageSize={20}
+              onChange={this.onChangeRate}
+              hideOnSinglePage={true}/>
           </div>
         </TabPane>
       </Tabs>

@@ -15,10 +15,10 @@ export default class SwapiService {
     return await res.json();
   }
 
-  async getSearchMovies(query='return',page=1) {
+  async getSearchMovies(query = 'return', page = 1) {
     const res = await this.getResource(`/3/search/movie?api_key=${this._apiKey}&query=${query}&page=${page}`);
-
-    return res.results;
+    console.log(res)
+    return res;
   }
 
   // async getSearchMovie() {
@@ -27,7 +27,7 @@ export default class SwapiService {
   //   return r;
   // }
 
-  async getGuestSessionId(){
+  async getGuestSessionId() {
     const guestSession = await this.getResource(`/3/authentication/guest_session/new?api_key=${this._apiKey}`);
     // console.log(guestSession)
     const objRequest = await guestSession.guest_session_id;
@@ -38,7 +38,7 @@ export default class SwapiService {
   async postRate(stars, idMovie, guestSessionId) {
     console.log(stars, idMovie);
     const guestSession = guestSessionId;
-    console.log(guestSession);
+    // console.log(guestSession);
     const res = await fetch(`${this._apiBase}/3/movie/${idMovie}/rating?api_key=${this._apiKey}&guest_session_id=${guestSession}`, {
       // const res = await fetch(`https://api.themoviedb.org/3/movie/125521/rating?api_key=864cd2acdebdfd281550947ea6066439&guest_session_id=313ac9f5b38bf9ac4196e2e82f659c80`, {
       method: 'POST',
@@ -54,13 +54,14 @@ export default class SwapiService {
     // return guestSession;
   }
 
-  async getRateMovie(guestSessionId) {
-
-    const result = await fetch(`https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=${this._apiKey}&sort_by=created_at.asc`);
+  async getRateMovie(guestSessionId, page = 1) {
+    console.log(guestSessionId+' guestSessionId');
+    const result = await fetch(`https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=${this._apiKey}&sort_by=created_at.asc&page=${page}`);
     if (!result.ok) {
       throw new Error(`Could not fetch , received ${result.status}`)
     }
     const arr = await result.json();
+    console.log(arr);
     return arr;
   }
 
@@ -71,7 +72,7 @@ export default class SwapiService {
       throw new Error(`Could not fetch , received ${result.status}`)
     }
     const arr = await result.json();
-    console.log(arr)
+    // console.log(arr)
     return arr;
   }
 
