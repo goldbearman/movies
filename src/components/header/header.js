@@ -21,10 +21,6 @@ export default class Header extends PureComponent {
     arrMovies: []
   };
 
-  // componentDidMount() {
-  //   this.getRateMovies()
-  // }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.arrMovies !== prevProps.arrMovies) {
       this.setArrMovie();
@@ -39,16 +35,10 @@ export default class Header extends PureComponent {
     })
   }
 
-  /////////////////////////////////////////////
-
   swapiService = new SwapiService();
 
   getRateMovies = (activeKey) => {
     console.log('getRateMovies');
-    // if (activeKey === '2') {
-    // console.log("in")
-    // console.log(this.props.guestSessionId)
-    // this.swapiService.getRateMovie(this.props.guestSessionId)
     console.log(this.props.guestSessionId + " guestSessionId");
     this.swapiService.getRateMovie(this.props.guestSessionId)
       .then((rateMovie) => {
@@ -63,7 +53,6 @@ export default class Header extends PureComponent {
     // }
   }
 
-
   onChange = (page) => {
     this.props.addItem(this.state.searchItem, page);
     this.setState({
@@ -72,10 +61,7 @@ export default class Header extends PureComponent {
   }
 
   onChangeRate = (pageRate) => {
-    // console.log(pageRate);
     console.log(this.props.guestSessionId + " guestSessionId");
-    // let newRateArr = this.state.rateMovie.slice((pageRate - 1) * 20, pageRate * 20);
-    // console.log(newRateArr);
     this.swapiService.getRateMovie(this.props.guestSessionId, pageRate)
       .then((rateMovie) => {
         console.log(rateMovie.results)
@@ -86,16 +72,9 @@ export default class Header extends PureComponent {
           pageRate: pageRate
         })
       }).catch(this.onError);
-
-
-    // this.setState({
-    //   pageRate: pageRate,
-    //   rateMovie:newRateArr
-    // })
   }
 
   addItem = (item) => {
-    // console.log(item);
     this.setState({
       searchItem: item,
     });
@@ -105,10 +84,6 @@ export default class Header extends PureComponent {
   render() {
 
     const {loading, error, guestSessionId, totalResults} = this.props;
-    // console.log(this.props.arrMovies)
-    // console.log(this.state.arrMovies)
-    // console.log(this.state.rateMovie)
-    // console.log(guestSessionId)
     console.log(totalResults)
 
     return (
@@ -127,7 +102,6 @@ export default class Header extends PureComponent {
               onChange={this.onChange}
               hideOnSinglePage={true}/>}
           </div>
-          {/*Content of Tab Pane 1*/}
         </TabPane> <TabPane tab="Rated" key="2">
         <MovieList arrMovies={this.state.rateMovie} loading={loading} error={error} page={this.state.pageRate}
                    guestSessionId={guestSessionId} arrRateMovie={true}/>

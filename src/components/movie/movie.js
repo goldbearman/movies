@@ -39,7 +39,6 @@ export default class Movie extends PureComponent {
 
   getGenres = () => {
     this.props.getAllGenres().then(arrgenres => {
-      // console.log(arrgenres.genres);
       this.setState({
         allGenres: arrgenres.genres
       });
@@ -48,9 +47,10 @@ export default class Movie extends PureComponent {
 
 
   trimText(text) {
-    if (text.length > 15) {
-      let new_str = text.slice(0, 100) + '...'
-      return new_str
+    if (text.length > 90) {
+      let whitespaceIndex = text.indexOf(' ', 90);
+      let newText = text.slice(0, whitespaceIndex);
+      return newText+' ...';
     }
     return text;
   }
@@ -70,7 +70,7 @@ export default class Movie extends PureComponent {
       rateDefault: stars
     });
     const idRate = this.props.movie.id;
-    this.props.setChangeRateArr({idRate,stars})
+    this.props.setChangeRateArr({idRate, stars})
     this.swapiService.postRate(stars, this.props.movie.id, this.props.guestSessionId).then(result => console.log(result))
   }
 
@@ -92,30 +92,30 @@ export default class Movie extends PureComponent {
     let poster;
     if (poster_path) {
       poster = `https://image.tmdb.org/t/p/w185/${poster_path}`;
-    }else poster = icon;
+    } else poster = icon;
 
     return (
       //<Col span={12}>
-        <div className='card'>
-          <img className="card__poster" src={poster}
-               alt="Poster"/>
-          <div className="card__content">
-            <div className={this.onColorRate(vote_average,)}>
-              <div>{vote_average}</div>
-            </div>
-            <h1>{original_title}</h1>
-            <div className="date">{this.checkDate(release_date)}</div>
-            <Genres allGenres={this.state.allGenres} movieGenres={genre_ids}/>
-            <div>
-              <p>
-                {this.trimText(overview)}
-              </p>
-            </div>
+      <div className='card'>
+        <img className="card__poster" src={poster}
+             alt="Poster"/>
+        <div className="card__content">
+          <div className={this.onColorRate(vote_average,)}>
+            <div>{vote_average}</div>
           </div>
-          <Rate className="stars" count="10" defaultValue={this.state.rateDefault}
-                onChange={this.onChangeStars} value={this.state.rateDefault}/>
+          <h1>{original_title}</h1>
+          <div className="date">{this.checkDate(release_date)}</div>
+          <Genres allGenres={this.state.allGenres} movieGenres={genre_ids}/>
+          <div>
+            <p>
+              {this.trimText(overview)}
+            </p>
+          </div>
         </div>
-     // </Col>
+        <Rate className="stars" count="10" defaultValue={this.state.rateDefault}
+              onChange={this.onChangeStars} value={this.state.rateDefault}/>
+      </div>
+      // </Col>
     );
   }
 }
