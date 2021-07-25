@@ -10,22 +10,14 @@ import {SwapiServiceProvider} from '../swapi-service-context/swapi-service-conte
 export default class App extends PureComponent {
   maxId = 100;
 
-  // constructor(props) {
-  //   super(props);
-  //   this.getMovies();
-  // }
-
   componentDidMount() {
     this.getMovies();
     this.getNewGuestSessionId()
-    // console.log('didMount')
-
   }
 
   state = {
     input: 'return',
     arrMovies: [],
-    // rateMovie:[],
     totalResults:0,
     loading: true,
     error: false,
@@ -52,21 +44,6 @@ export default class App extends PureComponent {
       }).catch(this.onError);
   }
 
-  // getNewRateArr(){
-  //   console.log(this.state.guestSessionId + " guestSessionId");
-  //   this.swapiService.getRateMovie(this.state.guestSessionId)
-  //     .then((rateMovie) => {
-  //       console.log(rateMovie.results)
-  //       console.log(rateMovie.total_results)
-  //       this.setState({
-  //         rateMovie: rateMovie.results,
-  //         rateTotalResults: rateMovie.total_results,
-  //         pageRate: 1
-  //       })
-  //     }).catch(this.onError);
-  // }
-
-
   getMovies(query, page) {
     this.swapiService.getSearchMovies(query, page)
       .then((obj) => {
@@ -81,17 +58,12 @@ export default class App extends PureComponent {
   }
 
   addItem = (input,page) => {
-    // console.log(input)
-    // this.setState({
-    //   input: input,
-    // })
     this.getMovies(input,page);
   }
 
   render() {
 
     const {arrMovies, loading, error,totalResults} = this.state;
-    // console.log(arrMovies)
 
     return (
       <section className="container">
@@ -103,19 +75,9 @@ export default class App extends PureComponent {
                     addItem={this.addItem}
                     guestSessionId={this.state.guestSessionId}
                     totalResults = {this.state.totalResults}
-
-                    // getMovies={this.getMovies}
             />
 
           </header>
-          <section className="main">
-
-            {/*<TaskList*/}
-            {/*    todos={this.showItems(this.state.todoData)}*/}
-            {/*    onDeleted={this.deleteItem}*/}
-            {/*    onToggleDone={this.onToggleDone}*/}
-            {/*/>*/}
-          </section>
         </SwapiServiceProvider>
       </section>
     );

@@ -1,7 +1,13 @@
-.container{
-    width: 1010px;
+.container {
+    max-width: 1010px;
     margin: 0 auto;
     background: #ffffff;
     padding: 32px;
     min-height: 100vh;
+}
+
+@media (max-width: 540px) {
+    .container {
+        padding: 16px;
+    }
 }

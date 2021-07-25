@@ -95,7 +95,7 @@ export default class Movie extends PureComponent {
     }else poster = icon;
 
     return (
-      <Col span={12}>
+      //<Col span={12}>
         <div className='card'>
           <img className="card__poster" src={poster}
                alt="Poster"/>
@@ -106,14 +106,16 @@ export default class Movie extends PureComponent {
             <h1>{original_title}</h1>
             <div className="date">{this.checkDate(release_date)}</div>
             <Genres allGenres={this.state.allGenres} movieGenres={genre_ids}/>
-            <p>
-              {this.trimText(overview)}
-            </p>
-            <Rate className="stars" count="10" defaultValue={this.state.rateDefault}
-                  onChange={this.onChangeStars} value={this.state.rateDefault}/>
+            <div>
+              <p>
+                {this.trimText(overview)}
+              </p>
+            </div>
           </div>
+          <Rate className="stars" count="10" defaultValue={this.state.rateDefault}
+                onChange={this.onChangeStars} value={this.state.rateDefault}/>
         </div>
-      </Col>
+     // </Col>
     );
   }
 }

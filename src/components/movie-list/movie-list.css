@@ -1,12 +1,22 @@
 .movie-list {
-    margin: 0;
+    margin-top: 34px;
     padding: 5px;
     list-style: none;
-    /*width: 100%;*/
+}
+
+@media (max-width: 540px) {
+  .ant-row.movie-list {
+        row-gap: 19px;
+    }
 }
 
 .movie-spinner{
     margin: 300px auto;
     width: 40px;
     display: block;
+}
+
+.ant-alert-info {
+    width: 300px;
+    margin: 30px auto;
 }

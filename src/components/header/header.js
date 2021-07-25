@@ -118,30 +118,29 @@ export default class Header extends PureComponent {
           <MovieList arrMovies={this.state.arrMovies} loading={loading} error={error} page={this.state.page}
                      guestSessionId={guestSessionId}/>
           <div className='pagination-container'>
-            <Pagination
+            {error ? null : <Pagination
               defaultCurrent={1}
               current={this.state.page}
               total={totalResults}
               defaultPageSize={20}
               showSizeChanger={false}
               onChange={this.onChange}
-              hideOnSinglePage={true}/>
+              hideOnSinglePage={true}/>}
           </div>
           {/*Content of Tab Pane 1*/}
-        </TabPane>
-        <TabPane tab="Rated" key="2">
-          <MovieList arrMovies={this.state.rateMovie} loading={loading} error={error} page={this.state.pageRate}
-                     guestSessionId={guestSessionId} hideOnSinglePage={true}/>
-          <div className='pagination-container'>
-            <Pagination
-              defaultCurrent={1}
-              current={this.state.pageRate}
-              total={this.state.rateTotalResults}
-              defaultPageSize={20}
-              onChange={this.onChangeRate}
-              hideOnSinglePage={true}/>
-          </div>
-        </TabPane>
+        </TabPane> <TabPane tab="Rated" key="2">
+        <MovieList arrMovies={this.state.rateMovie} loading={loading} error={error} page={this.state.pageRate}
+                   guestSessionId={guestSessionId} arrRateMovie={true}/>
+        <div className='pagination-container'>
+          {error ? null : <Pagination
+            defaultCurrent={1}
+            current={this.state.pageRate}
+            total={this.state.rateTotalResults}
+            defaultPageSize={20}
+            onChange={this.onChangeRate}
+            hideOnSinglePage={true}/>}
+        </div>
+      </TabPane>
       </Tabs>
     )
   }

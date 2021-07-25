@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
 import 'antd/dist/antd.css';
-import {Row, Col, Slider, Space, Spin} from 'antd';
+import {Row, Col, Slider, Space, Spin, Alert} from 'antd';
 
 import "./movie-list.css";
 import Movie from "../movie/movie";
@@ -52,12 +52,14 @@ export default class MovieList extends PureComponent {
       // movie.rating = stars;
 
       return (
-        <Movie key={movie.id}
-               movie={movie}
-               guestSessionId={guestSessionId}
-               getAllGenres={getAllGenres}
-               setChangeRateArr={setChangeRateArr}
-        />
+       <Col  flex="1 1 487px">
+          <Movie key={movie.id}
+                 movie={movie}
+                 guestSessionId={guestSessionId}
+                 getAllGenres={getAllGenres}
+                 setChangeRateArr={setChangeRateArr}
+          />
+       </Col>
       );
     });
 
@@ -67,7 +69,7 @@ export default class MovieList extends PureComponent {
 
   render() {
 
-    const {arrMovies, loading, error, page, guestSessionId} = this.props;
+    const {arrMovies, loading, error, page, guestSessionId, arrRateMovie} = this.props;
     console.log(guestSessionId)
     console.log(arrMovies)
 
@@ -75,9 +77,9 @@ export default class MovieList extends PureComponent {
     console.log(hasData)
     const onErrorMessage = error ? <ErrorIndicator/> : null;
     const onSpinner = loading ? <MovieSpinner/> : null;
-    // const content = hasData ?
-    //{/*<Row gutter={[38, 38]} wrap={true} className="movie-list">{this.createList(arrMovies, page, guestSessionId)}</Row> : null*/}
-// console.log('render return')
+    const onEmptyArr = arrMovies.length===0&&!loading&&!arrRateMovie&&!error? <Alert message="Nothing was found for your search" type="info" showIcon/>:null
+    const onEmptyRateArr = arrMovies.length===0&&!loading&&arrRateMovie&&!error? <Alert message="You didn't give ratings to the films" type="info" showIcon/>:null
+
     return (
       <SwapiServiceConsumer>
         {
@@ -85,9 +87,13 @@ export default class MovieList extends PureComponent {
             return (
               <React.Fragment>
                 {onSpinner}
+                {onEmptyArr}
+                {onEmptyRateArr}
                 {onErrorMessage}
                 {hasData ?
-                  <Row gutter={[38, 38]} wrap={true} className="movie-list">{this.createList(arrMovies, page, guestSessionId, getAllGenres, this.setChangeRateArr)}</Row> : null}
+                  <Row gutter={[38,38]} lg={{ gutter: 16 }} className="movie-list">
+                    {this.createList(arrMovies, page, guestSessionId, getAllGenres, this.setChangeRateArr)}
+                  </Row> : null}
               </React.Fragment>
             )
           }
