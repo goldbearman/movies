@@ -1,30 +1,31 @@
-import React from 'react'
+import React from "react";
+import PropTypes from "prop-types";
 
+const Genres = ({ allGenres, movieGenres }) => {
+  const elements = movieGenres.map((numMovieGenres) => {
+    let key = 100;
+    const name = allGenres.reduce((sum, objGenres) => {
+      if (objGenres.id === numMovieGenres) {
+        return sum + objGenres.name;
+      }
+      return sum;
+    }, "");
 
-const Genres = ({allGenres, movieGenres}) => {
-    // console.log(allGenres);
-    // console.log(movieGenres);
-    const elements = movieGenres.map((numMovieGenres) => {
-        // console.log(numMovieGenres);
-        // if(item.)
-        let name =  allGenres.reduce((sum, objGenres) => {
-            // console.log(objGenres);
-            if (objGenres.id === numMovieGenres) {
-                // console.log(objGenres.name)
-                return sum + objGenres.name;
-            }
-            return sum;
-        },'')
-        // console.log(name);
+    return (
+      <button key={key++} disabled>
+        {name}
+      </button>
+    );
+  });
 
-        return (
-            <button disabled>{name}</button>
-        );
-    });
-    // console.log(elements);
+  return <div className="genre">{elements}</div>;
+};
 
-    return <div className="genre">{elements}</div>;
+Genres.defaultProps = {};
 
-}
+Genres.propTypes = {
+  allGenres: PropTypes.arrayOf().isRequired,
+  movieGenres: PropTypes.number,
+};
 
 export default Genres;

@@ -1,115 +1,137 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-
-import 'antd/dist/antd.css';
-import {Row, Col, Slider, Space, Spin, Alert} from 'antd';
+import "antd/dist/antd.css";
+import { Row, Col, Space, Spin, Alert } from "antd";
 
 import "./movie-list.css";
 import Movie from "../movie/movie";
-import SwapiService from "../../services/swapi-service";
 import ErrorIndicator from "../error-indicator/error-indicator";
-import {SwapiServiceConsumer} from '../swapi-service-context/swapi-service-context'
+import { SwapiServiceConsumer } from "../swapi-service-context/swapi-service-context";
 
 export default class MovieList extends PureComponent {
+  static defaultProps = {
+    arrMovies: [],
+  };
+
+  // const { arrMovies, loading, error, page, guestSessionId, arrRateMovie } =
+  // this.props;
+
+  static propTypes = {
+    arrMovies: PropTypes.arrayOf(PropTypes.object).isRequired,
+    arrRateMovie: PropTypes.arrayOf(PropTypes.object).isRequired,
+    loading: PropTypes.bool,
+    error: PropTypes.bool,
+    guestSessionId: PropTypes.string,
+    totalResults: PropTypes.number,
+    page: PropTypes.number,
+    addItem: PropTypes.func,
+  };
 
   state = {
     idSession: 0,
     arrMovies: [],
-    changeRateArr: []
-  }
-
-  componentDidMount() {
-    console.log("componentDidMount movie-list")
-    // this.setArrMovies();
-  }
+    changeRateArr: [],
+  };
 
   setChangeRateArr = (obj) => {
-    console.log(obj)
-    // console.log(this.state.idSession)
-    // console.log(this.state.arrMovies)
-    // console.log(this.state.changeRateA)
-    let stateArr = this.state.changeRateArr;
-    console.log(stateArr)
+    const stateArr = this.state.changeRateArr;
     stateArr.push(obj);
-    console.log(stateArr);
     this.setState({
-      changeRateArr: stateArr
+      changeRateArr: stateArr,
     });
-  }
+  };
 
-  createList = (arrMovies, page, guestSessionId, getAllGenres, setChangeRateArr) => {
-    console.log('createList')
+  createList = (
+    arrMovies,
+    page,
+    guestSessionId,
+    getAllGenres,
+    setChangeRateArr
+  ) => {
     const elements = arrMovies.map((movie) => {
-
       this.state.changeRateArr.forEach((objIdStars) => {
-        if (movie.id === objIdStars.idRate) {
-          console.log(movie.id);
-          movie.rating = objIdStars.stars;
+        const copyMovie = movie;
+        if (copyMovie.id === objIdStars.idRate) {
+          copyMovie.rating = objIdStars.stars;
         }
       });
 
-      console.log(movie);
-      // movie.rating = stars;
-
       return (
-       <Col  flex="1 1 487px">
-          <Movie key={movie.id}
-                 movie={movie}
-                 guestSessionId={guestSessionId}
-                 getAllGenres={getAllGenres}
-                 setChangeRateArr={setChangeRateArr}
+        <Col flex="1 1 487px" key={movie.id}>
+          <Movie
+            key={movie.id}
+            movie={movie}
+            guestSessionId={guestSessionId}
+            getAllGenres={getAllGenres}
+            setChangeRateArr={setChangeRateArr}
           />
-       </Col>
+        </Col>
       );
     });
-
-    // return elements.slice((page - 1) * 6, page * 6);
     return elements;
   };
 
   render() {
-
-    const {arrMovies, loading, error, page, guestSessionId, arrRateMovie} = this.props;
-    console.log(guestSessionId)
-    console.log(arrMovies)
+    const { arrMovies, loading, error, page, guestSessionId, arrRateMovie } =
+      this.props;
 
     const hasData = !(loading || error);
-    console.log(hasData)
-    const onErrorMessage = error ? <ErrorIndicator/> : null;
-    const onSpinner = loading ? <MovieSpinner/> : null;
-    const onEmptyArr = arrMovies.length===0&&!loading&&!arrRateMovie&&!error? <Alert message="Nothing was found for your search" type="info" showIcon/>:null
-    const onEmptyRateArr = arrMovies.length===0&&!loading&&arrRateMovie&&!error? <Alert message="You didn't give ratings to the films" type="info" showIcon/>:null
+
+    const onErrorMessage = error ? <ErrorIndicator /> : null;
+    const onSpinner = loading ? <MovieSpinner /> : null;
+    const onEmptyArr =
+      arrMovies.length === 0 && !loading && !arrRateMovie && !error ? (
+        <Alert
+          message="Nothing was found for your search"
+          type="info"
+          showIcon
+        />
+      ) : null;
+    const onEmptyRateArr =
+      arrMovies.length === 0 && !loading && arrRateMovie && !error ? (
+        <Alert
+          message="You didn't give ratings to the films"
+          type="info"
+          showIcon
+        />
+      ) : null;
 
     return (
       <SwapiServiceConsumer>
-        {
-          ({getAllGenres}) => {
-            return (
-              <React.Fragment>
-                {onSpinner}
-                {onEmptyArr}
-                {onEmptyRateArr}
-                {onErrorMessage}
-                {hasData ?
-                  <Row gutter={[38,38]} lg={{ gutter: 16 }} className="movie-list">
-                    {this.createList(arrMovies, page, guestSessionId, getAllGenres, this.setChangeRateArr)}
-                  </Row> : null}
-              </React.Fragment>
-            )
-          }
-        }
+        {({ getAllGenres }) => {
+          return (
+            <React.Fragment>
+              {onSpinner}
+              {onEmptyArr}
+              {onEmptyRateArr}
+              {onErrorMessage}
+              {hasData ? (
+                <Row
+                  gutter={[38, 38]}
+                  lg={{ gutter: 16 }}
+                  className="movie-list"
+                >
+                  {this.createList(
+                    arrMovies,
+                    page,
+                    guestSessionId,
+                    getAllGenres,
+                    this.setChangeRateArr
+                  )}
+                </Row>
+              ) : null}
+            </React.Fragment>
+          );
+        }}
       </SwapiServiceConsumer>
     );
   }
-};
+}
 
 const MovieSpinner = () => {
-  return (<Space className="movie-spinner" size="middle">
-    <Spin size="large"/>
-  </Space>)
+  return (
+    <Space className="movie-spinner" size="middle">
+      <Spin size="large" />
+    </Space>
+  );
 };
-
-
-
-
-

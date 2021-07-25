@@ -1,0 +1,34 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb/base",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended",
+    "eslint:recommended"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "no-plusplus": "off",
+//    "no-console": "error",
+    "react/prop-types": "off",
+    "camelcase": ["error", {"allow": ["UNSAFE_componentWillMount"]}]
+
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
