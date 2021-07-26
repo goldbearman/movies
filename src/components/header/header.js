@@ -31,19 +31,9 @@ export default class Header extends PureComponent {
     rateMovie: [],
     rateTotalResults: 0,
     arrMovies: [],
+    errorRate: false,
+    loadingRate: true,
   };
-
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.arrMovies !== prevProps.arrMovies) {
-  //     this.setArrMovie();
-  //   }
-  // }
-
-  // setArrMovie() {
-  //   this.setState({
-  //     arrMovies: this.props.arrMovies,
-  //   });
-  // }
 
   swapiService = new SwapiService();
 
@@ -55,10 +45,17 @@ export default class Header extends PureComponent {
           rateMovie: rateMovie.results,
           rateTotalResults: rateMovie.total_results,
           pageRate: 1,
+          loadingRate: false,
         });
       })
       .catch(this.onError);
-    // }
+  };
+
+  onErrorRate = () => {
+    this.setState({
+      errorRate: true,
+      loadingRate: false,
+    });
   };
 
   onChange = (page) => {
@@ -78,7 +75,7 @@ export default class Header extends PureComponent {
           pageRate,
         });
       })
-      .catch(this.onError);
+      .catch(this.onErrorRate);
   };
 
   addItem = (item) => {
@@ -97,7 +94,6 @@ export default class Header extends PureComponent {
         <TabPane tab="Search" key="1">
           <SearchForm onItemAdded={this.addItem} />
           <MovieList
-            // arrMovies={this.state.arrMovies}
             arrMovies={arrMovies}
             loading={loading}
             error={error}
@@ -121,8 +117,8 @@ export default class Header extends PureComponent {
         <TabPane tab="Rated" key="2">
           <MovieList
             arrMovies={this.state.rateMovie}
-            loading={loading}
-            error={error}
+            loading={this.state.loadingRate}
+            error={this.state.errorRate}
             page={this.state.pageRate}
             guestSessionId={guestSessionId}
             isRateMovie={true}

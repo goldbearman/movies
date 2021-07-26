@@ -19,7 +19,7 @@ export default class App extends PureComponent {
     totalResults: 0,
     loading: true,
     error: false,
-    guestSessionId: 0,
+    guestSessionId: "",
   };
 
   swapiService = new SwapiService();

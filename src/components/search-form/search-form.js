@@ -1,14 +1,20 @@
 import React, { Component } from "react";
 
 import "./search-form.css";
+import PropTypes from "prop-types";
 
 export default class SearchForm extends Component {
+  static propTypes = {
+    onItemAdded: PropTypes.func,
+  };
+
   state = {
     label: "",
   };
 
   debounce = (fn, debounceTime) => {
     let timeOut;
+    // eslint-disable-next-line func-names
     return function () {
       const fnCall = () => {
         // eslint-disable-next-line prefer-rest-params
@@ -24,7 +30,6 @@ export default class SearchForm extends Component {
     if (e.target.value !== undefined && e.target.value.trim() !== "") {
       this.props.onItemAdded(e.target.value);
     }
-    console.log(e.target.value);
   }, 500);
 
   render() {

@@ -18,7 +18,6 @@ export default class SwapiService {
       // eslint-disable-next-line no-underscore-dangle
       `/3/search/movie?api_key=${this._apiKey}&query=${query}&page=${page}`
     );
-    console.log(res);
     return res;
   }
 
@@ -28,12 +27,10 @@ export default class SwapiService {
       `/3/authentication/guest_session/new?api_key=${this._apiKey}`
     );
     const objRequest = await guestSession.guest_session_id;
-    console.log(typeof objRequest);
     return objRequest;
   }
 
   async postRate(stars, idMovie, guestSessionId) {
-    console.log(stars, idMovie);
     const guestSession = guestSessionId;
     // console.log(guestSession);
     const res = await fetch(
@@ -50,11 +47,9 @@ export default class SwapiService {
     if (!res.ok) {
       throw new Error(`Could not fetch , received ${res.status}`);
     }
-    console.log("ok");
   }
 
   async getRateMovie(guestSessionId, page = 1) {
-    console.log(`${guestSessionId} guestSessionId`);
     const result = await fetch(
       // eslint-disable-next-line no-underscore-dangle
       `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=${this._apiKey}&sort_by=created_at.asc&page=${page}`
@@ -63,7 +58,6 @@ export default class SwapiService {
       throw new Error(`Could not fetch , received ${result.status}`);
     }
     const arr = await result.json();
-    console.log(arr);
     return arr;
   }
 

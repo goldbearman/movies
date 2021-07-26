@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 
 const Genres = ({ allGenres, movieGenres }) => {
   let key = 100;
-  // console.log(allGenres);
-  // console.log(movieGenres);
   const elements = movieGenres.map((numMovieGenres) => {
     const name = allGenres.reduce((sum, objGenres) => {
       if (objGenres.id === numMovieGenres) {

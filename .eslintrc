@@ -23,9 +23,7 @@
     "no-plusplus": "off",
     "no-console": "error",
     "react/prop-types": "off",
-    "camelcase": ["error", { "properties": "never" }]
-
-
+    "camelcase": "off"
   },
   "settings": {
     "react": {
