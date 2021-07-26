@@ -2,8 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Genres = ({ allGenres, movieGenres }) => {
+  let key = 100;
+  // console.log(allGenres);
+  // console.log(movieGenres);
   const elements = movieGenres.map((numMovieGenres) => {
-    let key = 100;
     const name = allGenres.reduce((sum, objGenres) => {
       if (objGenres.id === numMovieGenres) {
         return sum + objGenres.name;
@@ -24,8 +26,8 @@ const Genres = ({ allGenres, movieGenres }) => {
 Genres.defaultProps = {};
 
 Genres.propTypes = {
-  allGenres: PropTypes.arrayOf().isRequired,
-  movieGenres: PropTypes.number,
+  allGenres: PropTypes.array,
+  movieGenres: PropTypes.array,
 };
 
 export default Genres;

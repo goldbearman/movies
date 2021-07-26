@@ -11,6 +11,7 @@ export default class SearchForm extends Component {
     let timeOut;
     return function () {
       const fnCall = () => {
+        // eslint-disable-next-line prefer-rest-params
         fn.apply(this, arguments);
       };
       clearTimeout(timeOut);

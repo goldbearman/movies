@@ -125,7 +125,7 @@ export default class Header extends PureComponent {
             error={error}
             page={this.state.pageRate}
             guestSessionId={guestSessionId}
-            arrRateMovie={true}
+            isRateMovie={true}
           />
           <div className="pagination-container">
             {error ? null : (

@@ -21,9 +21,10 @@
   ],
   "rules": {
     "no-plusplus": "off",
-//    "no-console": "error",
+    "no-console": "error",
     "react/prop-types": "off",
-    "camelcase": ["error", {"allow": ["UNSAFE_componentWillMount"]}]
+    "camelcase": ["error", { "properties": "never" }]
+
 
   },
   "settings": {

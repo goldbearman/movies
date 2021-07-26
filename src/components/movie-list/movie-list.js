@@ -17,14 +17,15 @@ export default class MovieList extends PureComponent {
   // this.props;
 
   static propTypes = {
-    arrMovies: PropTypes.arrayOf(PropTypes.object).isRequired,
-    arrRateMovie: PropTypes.arrayOf(PropTypes.object).isRequired,
+    arrMovies: PropTypes.arrayOf(PropTypes.object),
+    arrRateMovie: PropTypes.arrayOf(PropTypes.object),
     loading: PropTypes.bool,
     error: PropTypes.bool,
     guestSessionId: PropTypes.string,
     totalResults: PropTypes.number,
     page: PropTypes.number,
     addItem: PropTypes.func,
+    isRateMovie: PropTypes.bool,
   };
 
   state = {
@@ -72,7 +73,7 @@ export default class MovieList extends PureComponent {
   };
 
   render() {
-    const { arrMovies, loading, error, page, guestSessionId, arrRateMovie } =
+    const { arrMovies, loading, error, page, guestSessionId, isRateMovie } =
       this.props;
 
     const hasData = !(loading || error);
@@ -80,7 +81,7 @@ export default class MovieList extends PureComponent {
     const onErrorMessage = error ? <ErrorIndicator /> : null;
     const onSpinner = loading ? <MovieSpinner /> : null;
     const onEmptyArr =
-      arrMovies.length === 0 && !loading && !arrRateMovie && !error ? (
+      arrMovies.length === 0 && !loading && !isRateMovie && !error ? (
         <Alert
           message="Nothing was found for your search"
           type="info"
@@ -88,7 +89,7 @@ export default class MovieList extends PureComponent {
         />
       ) : null;
     const onEmptyRateArr =
-      arrMovies.length === 0 && !loading && arrRateMovie && !error ? (
+      arrMovies.length === 0 && !loading && isRateMovie && !error ? (
         <Alert
           message="You didn't give ratings to the films"
           type="info"

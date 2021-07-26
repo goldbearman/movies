@@ -154,3 +154,10 @@
         min-height: 20px;
     }
 }
+
+@media (max-width: 420px) {
+    .card__content h1 {
+        width: 200px;
+    }
+}
+

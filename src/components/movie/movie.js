@@ -12,18 +12,6 @@ import "./movie.css";
 export default class Movie extends PureComponent {
   static defaultProps = {};
 
-  //   const {
-  //   movie: {
-  //     vote_average,
-  //     original_title,
-  //     overview,
-  //     poster_path,
-  //     release_date,
-  //     rating,
-  //     genre_ids,
-  //   },
-  // } = this.props;
-
   static propTypes = {
     movie: PropTypes.object,
     vote_average: PropTypes.string,
@@ -35,7 +23,7 @@ export default class Movie extends PureComponent {
     genre_ids: PropTypes.number,
     getAllGenres: PropTypes.func,
     setChangeRateArr: PropTypes.func,
-    guestSessionId: PropTypes.number,
+    guestSessionId: PropTypes.string,
   };
 
   state = {
@@ -59,13 +47,13 @@ export default class Movie extends PureComponent {
 
   swapiService = new SwapiService();
 
-  getGenres = () => {
-    this.props.getAllGenres().then((arrgenres) => {
+  getGenres() {
+    this.props.getAllGenres().then((arg) => {
       this.setState({
-        allGenres: arrgenres.genres,
+        allGenres: arg.genres,
       });
     });
-  };
+  }
 
   trimText = (text) => {
     if (text.length > 90) {
@@ -99,7 +87,7 @@ export default class Movie extends PureComponent {
     );
   };
 
-  checkDate = (releaseDate)=> {
+  checkDate = (releaseDate) => {
     let date;
     try {
       date = format(new Date(releaseDate), "MMMM dd, yyyy");
@@ -107,37 +95,44 @@ export default class Movie extends PureComponent {
       date = "";
     }
     return date;
-  }
+  };
 
   render() {
-    /*eslint camelcase: ["error", {allow: ["UNSAFE_componentWillMount"]}]*/
     const {
       movie: {
+        // eslint-disable-next-line camelcase
         vote_average,
+        // eslint-disable-next-line camelcase
         original_title,
         overview,
+        // eslint-disable-next-line camelcase
         poster_path,
+        // eslint-disable-next-line camelcase
         release_date,
-        // rating,
+        // eslint-disable-next-line camelcase
         genre_ids,
       },
     } = this.props;
 
     let poster;
+    // eslint-disable-next-line camelcase
     if (poster_path) {
+      // eslint-disable-next-line camelcase
       poster = `https://image.tmdb.org/t/p/w185/${poster_path}`;
     } else poster = icon;
 
     return (
-      // <Col span={12}>
       <div className="card">
         <img className="card__poster" src={poster} alt="Poster" />
         <div className="card__content">
           <div className={this.onColorRate(vote_average)}>
+            {/* eslint-disable-next-line camelcase */}
             <div>{vote_average}</div>
           </div>
+          {/* eslint-disable-next-line camelcase */}
           <h1>{original_title}</h1>
           <div className="date">{this.checkDate(release_date)}</div>
+          {/* eslint-disable-next-line camelcase */}
           <Genres allGenres={this.state.allGenres} movieGenres={genre_ids} />
           <div>
             <p>{this.trimText(overview)}</p>
