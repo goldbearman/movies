@@ -32,25 +32,20 @@
     font-weight: 400;
 }
 
-
 html,
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-    background: #F7F7F7;
 }
 
-/*body {*/
-/*    font-family: 'Inter', sans-serif;*/
-/*    font-size: 14px;*/
-/*    line-height: 1.4em;*/
-/*    !*background: #ffffff;*!*/
-/*    background-color: #F7F7F7;*/
-/*    color: #000000;*/
-/*    margin: 0 auto;*/
-/*    font-weight: 300;*/
-/*}*/
+body {
+    padding: 0 calc(20px - (100vw - 100%)) 0 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #000000;
+    font-weight: 400;
+}
+
 #root {
     background: #F7F7F7;
+    width: 100vw;
 }

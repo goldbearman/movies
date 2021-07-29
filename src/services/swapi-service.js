@@ -3,24 +3,6 @@ export default class SwapiService {
 
   _apiKey = "864cd2acdebdfd281550947ea6066439";
 
-  async getResource(url) {
-    // eslint-disable-next-line no-underscore-dangle
-    const res = await fetch(`${this._apiBase}${url}`);
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}, received ${res.status}`);
-    }
-    // eslint-disable-next-line no-return-await
-    return await res.json();
-  }
-
-  async getSearchMovies(query = "return", page = 1) {
-    const res = await this.getResource(
-      // eslint-disable-next-line no-underscore-dangle
-      `/3/search/movie?api_key=${this._apiKey}&query=${query}&page=${page}`
-    );
-    return res;
-  }
-
   async getGuestSessionId() {
     const guestSession = await this.getResource(
       // eslint-disable-next-line no-underscore-dangle
@@ -49,26 +31,37 @@ export default class SwapiService {
     }
   }
 
-  async getRateMovie(guestSessionId, page = 1) {
-    const result = await fetch(
-      // eslint-disable-next-line no-underscore-dangle
-      `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=${this._apiKey}&sort_by=created_at.asc&page=${page}`
-    );
-    if (!result.ok) {
-      throw new Error(`Could not fetch , received ${result.status}`);
+  async getResource(url) {
+    // eslint-disable-next-line no-underscore-dangle
+    const res = await fetch(`${this._apiBase}${url}`);
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}, received ${res.status}`);
     }
-    const arr = await result.json();
-    return arr;
+    // eslint-disable-next-line no-return-await
+    return await res.json();
+  }
+
+  async getSearchMovies(query = "return", page = 1) {
+    const res = await this.getResource(
+      // eslint-disable-next-line no-underscore-dangle
+      `/3/search/movie?api_key=${this._apiKey}&query=${query}&page=${page}`
+    );
+    return res;
+  }
+
+  async getRateMovie(guestSessionId, page = 1) {
+    const res = await this.getResource(
+      // eslint-disable-next-line no-underscore-dangle
+      `/3/guest_session/${guestSessionId}/rated/movies?api_key=${this._apiKey}&sort_by=created_at.asc&page=${page}`
+    );
+    return res;
   }
 
   getAllGenres = async () => {
-    const result = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=864cd2acdebdfd281550947ea6066439`
+    const res = await this.getResource(
+      // eslint-disable-next-line no-underscore-dangle
+      `/3/genre/movie/list?api_key=${this._apiKey}`
     );
-    if (!result.ok) {
-      throw new Error(`Could not fetch , received ${result.status}`);
-    }
-    const arr = await result.json();
-    return arr;
+    return res;
   };
 }

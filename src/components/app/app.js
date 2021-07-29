@@ -13,6 +13,10 @@ export default class App extends PureComponent {
     this.getNewGuestSessionId();
   }
 
+  // componentWillUnmount() {
+  //   this.getMovies() = null;
+  // }
+
   state = {
     input: "return",
     arrMovies: [],
@@ -23,6 +27,12 @@ export default class App extends PureComponent {
   };
 
   swapiService = new SwapiService();
+
+  componentDidCatch() {
+    this.setState({
+      error: true,
+    });
+  }
 
   onError = () => {
     this.setState({

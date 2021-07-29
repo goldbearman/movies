@@ -13,9 +13,6 @@ export default class MovieList extends PureComponent {
     arrMovies: [],
   };
 
-  // const { arrMovies, loading, error, page, guestSessionId, arrRateMovie } =
-  // this.props;
-
   static propTypes = {
     arrMovies: PropTypes.arrayOf(PropTypes.object),
     arrRateMovie: PropTypes.arrayOf(PropTypes.object),

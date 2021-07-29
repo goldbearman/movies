@@ -139,6 +139,7 @@ export default class Movie extends PureComponent {
           </div>
         </div>
         <Rate
+          allowHalf
           className="stars"
           count="10"
           defaultValue={this.state.rateDefault}

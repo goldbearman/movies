@@ -37,6 +37,12 @@ export default class Header extends PureComponent {
 
   swapiService = new SwapiService();
 
+  componentDidCatch() {
+    this.setState({
+      errorRate: true,
+    });
+  }
+
   getRateMovies = () => {
     this.swapiService
       .getRateMovie(this.props.guestSessionId)
@@ -81,6 +87,7 @@ export default class Header extends PureComponent {
   addItem = (item) => {
     this.setState({
       searchItem: item,
+      page: 1,
     });
     this.props.addItem(item);
   };
