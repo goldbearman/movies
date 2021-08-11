@@ -35,17 +35,23 @@
 html,
 body {
     margin: 0;
+    width: 100%;
+}
+
+html{
+    padding: 0 calc(20px - (100vw - 100%)) 0 0;
+    background-color: #F7F7F7;
 }
 
 body {
-    padding: 0 calc(20px - (100vw - 100%)) 0 0;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     color: #000000;
     font-weight: 400;
+    background-color: #F7F7F7;
+    width: 100%;
 }
 
 #root {
-    background: #F7F7F7;
-    width: 100vw;
+    background-color: #F7F7F7;
 }

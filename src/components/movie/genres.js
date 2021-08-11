@@ -1,25 +1,57 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 
-const Genres = ({ allGenres, movieGenres }) => {
-  let key = 100;
-  const elements = movieGenres.map((numMovieGenres) => {
-    const name = allGenres.reduce((sum, objGenres) => {
-      if (objGenres.id === numMovieGenres) {
-        return sum + objGenres.name;
-      }
-      return sum;
-    }, "");
+export default class Genres extends PureComponent {
+  // const Genres = ({ allGenres, movieGenres }) => {
+
+  // constructor(props) {
+  //   super(props);
+  //   // this.myRef = React.createRef();
+  // }
+
+  state = {
+    height: 0,
+  };
+
+  componentDidMount() {
+    // eslint-disable-next-line no-console
+    console.log(this.myRef.offsetHeight);
+    // eslint-disable-next-line no-console
+    console.log(this.myRef.offsetHeight);
+    // eslint-disable-next-line no-console
+    this.setState({
+      height: this.myRef.offsetHeight,
+    });
+  }
+
+  render() {
+    this.props.getHeight(this.state.height);
+    // eslint-disable-next-line no-console
+    // console.log(this.myRef.offsetHeight);
+    let key = 100;
+    const elements = this.props.movieGenres.map((numMovieGenres) => {
+      const name = this.props.allGenres.reduce((sum, objGenres) => {
+        if (objGenres.id === numMovieGenres) {
+          return sum + objGenres.name;
+        }
+        return sum;
+      }, "");
+
+      return (
+        <button key={key++} disabled>
+          {name}
+        </button>
+      );
+    });
 
     return (
-      <button key={key++} disabled>
-        {name}
-      </button>
+      // eslint-disable-next-line no-return-assign
+      <div className="genre" ref={(myRef) => (this.myRef = myRef)}>
+        {elements}
+      </div>
     );
-  });
-
-  return <div className="genre">{elements}</div>;
-};
+  }
+}
 
 Genres.defaultProps = {};
 
@@ -28,4 +60,4 @@ Genres.propTypes = {
   movieGenres: PropTypes.array,
 };
 
-export default Genres;
+// export default Genres;

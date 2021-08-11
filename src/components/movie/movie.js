@@ -31,12 +31,53 @@ export default class Movie extends PureComponent {
     rateDefault: 0,
     allGenres: [],
     rating: 0,
+    height: 0,
   };
+
+  constructor(props) {
+    super(props);
+    this.myInput = React.createRef();
+    this.rateHeight = 0;
+    // this.ref = React.createRef();
+  }
 
   componentDidMount() {
     this.setMovie();
     this.getGenres();
+
+    this.setState({
+      height: this.myInput.current.offsetHeight,
+    });
+    // eslint-disable-next-line no-console
+    console.log(this.myInput.current.offsetHeight);
+    // eslint-disable-next-line no-console
+    console.log(
+      this.myInput.current.clientHeight + this.props.movie.original_title
+    );
+    // eslint-disable-next-line no-console
+    console.log(this.rateHeight);
+    const num = 224 - this.myInput.current.offsetHeight;
+    // eslint-disable-next-line no-console
+    console.log(num);
+    this.linesNumber = (num / 18) * 34;
+    // eslint-disable-next-line no-console
+    // console.log(this.linesNumber);
+    // this.correctText();
   }
+
+  getHeight = (height) => {
+    // eslint-disable-next-line no-console
+    console.log(height);
+    this.setState({
+      height,
+    });
+  };
+
+  correctText = (text) => {
+    // eslint-disable-next-line no-console
+    console.log(this.state.height + this.props.movie.original_title);
+    return this.trimText(text, this.linesNumber);
+  };
 
   setMovie() {
     this.setState({
@@ -55,9 +96,9 @@ export default class Movie extends PureComponent {
     });
   }
 
-  trimText = (text) => {
-    if (text.length > 90) {
-      const whitespaceIndex = text.indexOf(" ", 90);
+  trimText = (text, size) => {
+    if (text.length > size) {
+      const whitespaceIndex = text.indexOf(" ", size);
       const newText = text.slice(0, whitespaceIndex);
       return `${newText} ...`;
     }
@@ -125,17 +166,29 @@ export default class Movie extends PureComponent {
       <div className="card">
         <img className="card__poster" src={poster} alt="Poster" />
         <div className="card__content">
-          <div className={this.onColorRate(vote_average)}>
+          <div
+            className="without-text"
+            /* eslint-disable-next-line no-return-assign */
+            ref={this.myInput}
+          >
+            <div className={this.onColorRate(vote_average)}>
+              {/* eslint-disable-next-line camelcase */}
+              <div>{vote_average}</div>
+            </div>
             {/* eslint-disable-next-line camelcase */}
-            <div>{vote_average}</div>
+            <h1>{this.trimText(original_title, 40)}</h1>
+            <div className="date">{this.checkDate(release_date)}</div>
+            {/* eslint-disable-next-line camelcase */}
+            <Genres
+              allGenres={this.state.allGenres}
+              movieGenres={genre_ids}
+              getHeight={this.getHeight}
+              /* eslint-disable-next-line no-return-assign */
+              ref={(myRefMovie) => (this.myRefMovie = myRefMovie)}
+            />
           </div>
-          {/* eslint-disable-next-line camelcase */}
-          <h1>{original_title}</h1>
-          <div className="date">{this.checkDate(release_date)}</div>
-          {/* eslint-disable-next-line camelcase */}
-          <Genres allGenres={this.state.allGenres} movieGenres={genre_ids} />
           <div>
-            <p>{this.trimText(overview)}</p>
+            <p>{this.correctText(overview)}</p>
           </div>
         </div>
         <Rate
