@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import React, { PureComponent } from "react";
 
 import "antd/dist/antd.css";
-import "./header.css";
+import "./main-container.css";
 import SearchForm from "../search-form/search-form";
 import MovieList from "../movie-list/movie-list";
 import SwapiService from "../../services/swapi-service";
 
 const { TabPane } = Tabs;
 
-export default class Header extends PureComponent {
+export default class MainContainer extends PureComponent {
   static defaultProps = {
     arrMovies: [],
   };
@@ -33,9 +33,15 @@ export default class Header extends PureComponent {
     arrMovies: [],
     errorRate: false,
     loadingRate: true,
+    allGenres: [],
   };
 
   swapiService = new SwapiService();
+
+  componentDidMount() {
+    // this.setMovie();
+    this.getGenres();
+  }
 
   componentDidCatch() {
     this.setState({
@@ -56,6 +62,14 @@ export default class Header extends PureComponent {
       })
       .catch(this.onError);
   };
+
+  getGenres() {
+    this.swapiService.getAllGenres().then((arg) => {
+      this.setState({
+        allGenres: arg.genres,
+      });
+    });
+  }
 
   onErrorRate = () => {
     this.setState({
@@ -102,10 +116,11 @@ export default class Header extends PureComponent {
           <SearchForm onItemAdded={this.addItem} />
           <MovieList
             arrMovies={arrMovies}
-            loading={loading}
-            error={error}
             page={this.state.page}
             guestSessionId={guestSessionId}
+            loading={loading}
+            error={error}
+            allGenres={this.state.allGenres}
           />
           <div className="pagination-container">
             {error ? null : (
@@ -129,6 +144,7 @@ export default class Header extends PureComponent {
             page={this.state.pageRate}
             guestSessionId={guestSessionId}
             isRateMovie={true}
+            allGenres={this.state.allGenres}
           />
           <div className="pagination-container">
             {error ? null : (

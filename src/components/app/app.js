@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
 
 import "./app.css";
-import Header from "../header/header";
+import MainContainer from "../main-container/main-container";
 import SwapiService from "../../services/swapi-service";
-import { SwapiServiceProvider } from "../swapi-service-context/swapi-service-context";
+import { SwapiServiceProvider } from "../../swapi-service-context/swapi-service-context";
 
 export default class App extends PureComponent {
   maxId = 100;
@@ -12,10 +12,6 @@ export default class App extends PureComponent {
     this.getMovies();
     this.getNewGuestSessionId();
   }
-
-  // componentWillUnmount() {
-  //   this.getMovies() = null;
-  // }
 
   state = {
     input: "return",
@@ -75,8 +71,8 @@ export default class App extends PureComponent {
     return (
       <section className="container">
         <SwapiServiceProvider value={this.swapiService}>
-          <header className="header">
-            <Header
+          <main className="header">
+            <MainContainer
               arrMovies={arrMovies}
               loading={loading}
               error={error}
@@ -84,7 +80,7 @@ export default class App extends PureComponent {
               guestSessionId={this.state.guestSessionId}
               totalResults={this.state.totalResults}
             />
-          </header>
+          </main>
         </SwapiServiceProvider>
       </section>
     );

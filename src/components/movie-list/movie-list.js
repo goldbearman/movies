@@ -6,7 +6,7 @@ import { Row, Col, Space, Spin, Alert } from "antd";
 import "./movie-list.css";
 import Movie from "../movie/movie";
 import ErrorIndicator from "../error-indicator/error-indicator";
-import { SwapiServiceConsumer } from "../swapi-service-context/swapi-service-context";
+import { SwapiServiceConsumer } from "../../swapi-service-context/swapi-service-context";
 
 export default class MovieList extends PureComponent {
   static defaultProps = {
@@ -46,6 +46,8 @@ export default class MovieList extends PureComponent {
     getAllGenres,
     setChangeRateArr
   ) => {
+    // eslint-disable-next-line no-console
+    console.log("createList");
     const elements = arrMovies.map((movie) => {
       this.state.changeRateArr.forEach((objIdStars) => {
         const copyMovie = movie;
@@ -60,7 +62,7 @@ export default class MovieList extends PureComponent {
             key={movie.id}
             movie={movie}
             guestSessionId={guestSessionId}
-            getAllGenres={getAllGenres}
+            allGenres={this.props.allGenres}
             setChangeRateArr={setChangeRateArr}
           />
         </Col>
@@ -98,7 +100,7 @@ export default class MovieList extends PureComponent {
       <SwapiServiceConsumer>
         {({ getAllGenres }) => {
           return (
-            <React.Fragment>
+            <>
               {onSpinner}
               {onEmptyArr}
               {onEmptyRateArr}
@@ -118,7 +120,7 @@ export default class MovieList extends PureComponent {
                   )}
                 </Row>
               ) : null}
-            </React.Fragment>
+            </>
           );
         }}
       </SwapiServiceConsumer>

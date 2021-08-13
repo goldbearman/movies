@@ -1,57 +1,48 @@
-import React, { PureComponent } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-export default class Genres extends PureComponent {
-  // const Genres = ({ allGenres, movieGenres }) => {
+// const useResize = (myRef) => {
+//   // eslint-disable-next-line no-console
+//   console.log(myRef);
+//   const [width, setWidth] = useState(0);
+//   const [height, setHeight] = useState(0);
+//
+//   const handleResize = () => {
+//     setWidth(myRef.current.offsetWidth);
+//     setHeight(myRef.current.offsetHeight);
+//   };
+//
+//   useEffect(() => {
+//     // eslint-disable-next-line no-unused-expressions
+//     myRef.current && myRef.current.addEventListener("resize", handleResize);
+//
+//     return () => {
+//       myRef.current.removeEventListener("resize", handleResize);
+//     };
+//   }, [myRef]);
+//
+//   return { width, height };
+// };
 
-  // constructor(props) {
-  //   super(props);
-  //   // this.myRef = React.createRef();
-  // }
-
-  state = {
-    height: 0,
-  };
-
-  componentDidMount() {
-    // eslint-disable-next-line no-console
-    console.log(this.myRef.offsetHeight);
-    // eslint-disable-next-line no-console
-    console.log(this.myRef.offsetHeight);
-    // eslint-disable-next-line no-console
-    this.setState({
-      height: this.myRef.offsetHeight,
-    });
-  }
-
-  render() {
-    this.props.getHeight(this.state.height);
-    // eslint-disable-next-line no-console
-    // console.log(this.myRef.offsetHeight);
-    let key = 100;
-    const elements = this.props.movieGenres.map((numMovieGenres) => {
-      const name = this.props.allGenres.reduce((sum, objGenres) => {
-        if (objGenres.id === numMovieGenres) {
-          return sum + objGenres.name;
-        }
-        return sum;
-      }, "");
-
-      return (
-        <button key={key++} disabled>
-          {name}
-        </button>
-      );
-    });
+const Genres = ({ allGenres, movieGenres }) => {
+  let key = 100;
+  const elements = movieGenres.map((numMovieGenres) => {
+    const name = allGenres.reduce((sum, objGenres) => {
+      if (objGenres.id === numMovieGenres) {
+        return sum + objGenres.name;
+      }
+      return sum;
+    }, "");
 
     return (
-      // eslint-disable-next-line no-return-assign
-      <div className="genre" ref={(myRef) => (this.myRef = myRef)}>
-        {elements}
-      </div>
+      <button key={key++} disabled>
+        {name}
+      </button>
     );
-  }
-}
+  });
+
+  return <div className="genre">{elements}</div>;
+};
 
 Genres.defaultProps = {};
 
@@ -60,4 +51,4 @@ Genres.propTypes = {
   movieGenres: PropTypes.array,
 };
 
-// export default Genres;
+export default Genres;

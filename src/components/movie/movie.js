@@ -34,49 +34,23 @@ export default class Movie extends PureComponent {
     height: 0,
   };
 
-  constructor(props) {
-    super(props);
-    this.myInput = React.createRef();
-    this.rateHeight = 0;
-    // this.ref = React.createRef();
-  }
-
   componentDidMount() {
     this.setMovie();
-    this.getGenres();
-
-    this.setState({
-      height: this.myInput.current.offsetHeight,
-    });
-    // eslint-disable-next-line no-console
-    console.log(this.myInput.current.offsetHeight);
-    // eslint-disable-next-line no-console
-    console.log(
-      this.myInput.current.clientHeight + this.props.movie.original_title
-    );
-    // eslint-disable-next-line no-console
-    console.log(this.rateHeight);
-    const num = 224 - this.myInput.current.offsetHeight;
-    // eslint-disable-next-line no-console
-    console.log(num);
-    this.linesNumber = (num / 18) * 34;
-    // eslint-disable-next-line no-console
-    // console.log(this.linesNumber);
-    // this.correctText();
   }
 
-  getHeight = (height) => {
-    // eslint-disable-next-line no-console
-    console.log(height);
-    this.setState({
-      height,
-    });
-  };
-
   correctText = (text) => {
+    // if()
     // eslint-disable-next-line no-console
-    console.log(this.state.height + this.props.movie.original_title);
-    return this.trimText(text, this.linesNumber);
+    console.log(
+      `${this.props.movie.original_title}  ${this.props.movie.genre_ids.length}`
+    );
+    const lines =
+      (224 -
+        ((this.props.movie.original_title.length / 15) * 31 + 5) -
+        28 -
+        (this.props.movie.genre_ids.length / 2) * 28) /
+      17;
+    return this.trimText(text, lines * 31);
   };
 
   setMovie() {
@@ -87,14 +61,6 @@ export default class Movie extends PureComponent {
   }
 
   swapiService = new SwapiService();
-
-  getGenres() {
-    this.props.getAllGenres().then((arg) => {
-      this.setState({
-        allGenres: arg.genres,
-      });
-    });
-  }
 
   trimText = (text, size) => {
     if (text.length > size) {
@@ -179,13 +145,7 @@ export default class Movie extends PureComponent {
             <h1>{this.trimText(original_title, 40)}</h1>
             <div className="date">{this.checkDate(release_date)}</div>
             {/* eslint-disable-next-line camelcase */}
-            <Genres
-              allGenres={this.state.allGenres}
-              movieGenres={genre_ids}
-              getHeight={this.getHeight}
-              /* eslint-disable-next-line no-return-assign */
-              ref={(myRefMovie) => (this.myRefMovie = myRefMovie)}
-            />
+            <Genres allGenres={this.props.allGenres} movieGenres={genre_ids} />
           </div>
           <div>
             <p>{this.correctText(overview)}</p>
