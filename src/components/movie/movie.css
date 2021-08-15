@@ -6,6 +6,8 @@
     margin-left: 2px;
     font-size: 12px;
     display: flex;
+
+    /*flex-direction: row;*/
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, .1);
 }
 
@@ -25,9 +27,12 @@
 
 .card__content {
     padding: 10px 20px;
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+    /*align-content: space-between;*/
 }
-
-
 
 .rating {
     display: flex;
@@ -64,8 +69,9 @@
 
 .card__content h1 {
     font-size: 20px;
-    margin-bottom: 5px;
-    width: 190px;
+    margin-bottom: 0;
+    width: 180px;
+
 }
 
 .card__content .date {
@@ -77,6 +83,7 @@
 
 .genre {
     /*margin-bottom: 9px;*/
+    width: 220px;
 }
 
 .card__content .genre button {
@@ -90,14 +97,27 @@
 }
 
 .card__content p {
-    max-height: 110px;
+    margin: 0;
+    height: 100%;
     overflow: hidden;
+    /*text-overflow:ellipsis;*/
+}
+
+.card__content .without-text {
+
+    /*height: 230px;*/
+    overflow: hidden;
+
 }
 
 .stars {
-    position: absolute;
-    bottom: 10px;
-    right: 23px;
+    /*position: absolute;*/
+    /*bottom: 10px;*/
+    /*right: 23px;*/
+
+    display: block;
+    margin-bottom: 0;
+    margin-top: auto;
 }
 
 .ant-rate {
@@ -144,15 +164,20 @@
     .card__content p {
         max-height: 110px;
         overflow: hidden;
-        margin-top: 10px;
+        padding-top: 5px;
         margin-left: -74px;
     }
     .card__content .genre {
         min-height: 30px;
+        width: 100%;
     }
     .card__content .date {
         min-height: 20px;
     }
+    .stars {
+        text-align: right;
+    }
+
 }
 
 @media (max-width: 420px) {

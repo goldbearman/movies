@@ -32,25 +32,50 @@ export default class Movie extends PureComponent {
     allGenres: [],
     rating: 0,
     height: 0,
+    text: " ",
   };
+
+  constructor(props) {
+    super(props);
+    this.pRef = React.createRef();
+  }
 
   componentDidMount() {
     this.setMovie();
+    this.correctText();
   }
 
-  correctText = (text) => {
-    // if()
+  correctText = () => {
+    // // eslint-disable-next-line no-console
+    // console.log(
+    //   `${this.props.movie.original_title}  ${this.props.movie.genre_ids.length}`
+    // );
+    // // eslint-disable-next-line no-console
+    // console.log(
+    //   Math.round(this.props.movie.original_title.length / 15) * 31 + 5
+    // );
+    // // eslint-disable-next-line no-console
+    // console.log(Math.ceil(this.props.movie.genre_ids.length / 2) * 31);
+    // const lines =
+    //   (214 -
+    //     (Math.round(this.props.movie.original_title.length / 15) * 31 + 5) -
+    //     28 -
+    //     Math.ceil(this.props.movie.genre_ids.length / 2) * 25) /
+    //   17;
+    // // eslint-disable-next-line no-console
+    // console.log(lines);
+    // return this.trimText(text, lines * 20);
     // eslint-disable-next-line no-console
-    console.log(
-      `${this.props.movie.original_title}  ${this.props.movie.genre_ids.length}`
+    console.log(this.pRef.current.textContent);
+    console.log(this.pRef.current.offsetHeight);
+    console.log(this.pRef.current.clientWidth);
+    const letterCount = Math.floor(this.pRef.current.offsetHeight / 18) * 30;
+    console.log(Math.floor(this.pRef.current.clientHeight / 18));
+    this.pRef.current.textContent = this.trimText(
+      this.pRef.current.textContent,
+      letterCount
     );
-    const lines =
-      (224 -
-        ((this.props.movie.original_title.length / 15) * 31 + 5) -
-        28 -
-        (this.props.movie.genre_ids.length / 2) * 28) /
-      17;
-    return this.trimText(text, lines * 31);
+    // console.log(this.pRef.current.textContent);
   };
 
   setMovie() {
@@ -124,6 +149,7 @@ export default class Movie extends PureComponent {
     let poster;
     // eslint-disable-next-line camelcase
     if (poster_path) {
+      // console.log(poster_path);
       // eslint-disable-next-line camelcase
       poster = `https://image.tmdb.org/t/p/w185/${poster_path}`;
     } else poster = icon;
@@ -131,34 +157,29 @@ export default class Movie extends PureComponent {
     return (
       <div className="card">
         <img className="card__poster" src={poster} alt="Poster" />
+        {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
         <div className="card__content">
-          <div
-            className="without-text"
-            /* eslint-disable-next-line no-return-assign */
-            ref={this.myInput}
-          >
-            <div className={this.onColorRate(vote_average)}>
-              {/* eslint-disable-next-line camelcase */}
-              <div>{vote_average}</div>
-            </div>
-            {/* eslint-disable-next-line camelcase */}
-            <h1>{this.trimText(original_title, 40)}</h1>
-            <div className="date">{this.checkDate(release_date)}</div>
-            {/* eslint-disable-next-line camelcase */}
-            <Genres allGenres={this.props.allGenres} movieGenres={genre_ids} />
+          {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
+          <div className={this.onColorRate(vote_average)}>
+            <div>{vote_average}</div>
           </div>
-          <div>
-            <p>{this.correctText(overview)}</p>
-          </div>
+          {/* eslint-disable-next-line camelcase */}
+          <h1>{original_title}</h1>
+          <div className="date">{this.checkDate(release_date)}</div>
+          {/* eslint-disable-next-line camelcase */}
+          <Genres allGenres={this.props.allGenres} movieGenres={genre_ids} />
+          <p className="text-rings-responsively" ref={this.pRef}>
+            {overview}
+          </p>
+          <Rate
+            allowHalf
+            className="stars"
+            count="10"
+            defaultValue={this.state.rateDefault}
+            onChange={this.onChangeStars}
+            value={this.state.rateDefault}
+          />
         </div>
-        <Rate
-          allowHalf
-          className="stars"
-          count="10"
-          defaultValue={this.state.rateDefault}
-          onChange={this.onChangeStars}
-          value={this.state.rateDefault}
-        />
       </div>
     );
   }
