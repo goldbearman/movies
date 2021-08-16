@@ -46,36 +46,11 @@ export default class Movie extends PureComponent {
   }
 
   correctText = () => {
-    // // eslint-disable-next-line no-console
-    // console.log(
-    //   `${this.props.movie.original_title}  ${this.props.movie.genre_ids.length}`
-    // );
-    // // eslint-disable-next-line no-console
-    // console.log(
-    //   Math.round(this.props.movie.original_title.length / 15) * 31 + 5
-    // );
-    // // eslint-disable-next-line no-console
-    // console.log(Math.ceil(this.props.movie.genre_ids.length / 2) * 31);
-    // const lines =
-    //   (214 -
-    //     (Math.round(this.props.movie.original_title.length / 15) * 31 + 5) -
-    //     28 -
-    //     Math.ceil(this.props.movie.genre_ids.length / 2) * 25) /
-    //   17;
-    // // eslint-disable-next-line no-console
-    // console.log(lines);
-    // return this.trimText(text, lines * 20);
-    // eslint-disable-next-line no-console
-    console.log(this.pRef.current.textContent);
-    console.log(this.pRef.current.offsetHeight);
-    console.log(this.pRef.current.clientWidth);
     const letterCount = Math.floor(this.pRef.current.offsetHeight / 18) * 30;
-    console.log(Math.floor(this.pRef.current.clientHeight / 18));
     this.pRef.current.textContent = this.trimText(
       this.pRef.current.textContent,
       letterCount
     );
-    // console.log(this.pRef.current.textContent);
   };
 
   setMovie() {
@@ -149,7 +124,6 @@ export default class Movie extends PureComponent {
     let poster;
     // eslint-disable-next-line camelcase
     if (poster_path) {
-      // console.log(poster_path);
       // eslint-disable-next-line camelcase
       poster = `https://image.tmdb.org/t/p/w185/${poster_path}`;
     } else poster = icon;

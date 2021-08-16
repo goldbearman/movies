@@ -21,7 +21,7 @@
   ],
   "rules": {
     "no-plusplus": "off",
-    "no-console": "off",
+    "no-console": "warn",
     "react/prop-types": "off",
     "camelcase": "off"
   },

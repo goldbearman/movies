@@ -56,6 +56,7 @@ export default class App extends PureComponent {
           arrMovies: obj.results,
           totalResults: obj.total_results,
           loading: false,
+          error: false,
         });
       })
       .catch(this.onError);

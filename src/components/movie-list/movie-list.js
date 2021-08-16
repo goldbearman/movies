@@ -46,8 +46,6 @@ export default class MovieList extends PureComponent {
     getAllGenres,
     setChangeRateArr
   ) => {
-    // eslint-disable-next-line no-console
-    console.log("createList");
     const elements = arrMovies.map((movie) => {
       this.state.changeRateArr.forEach((objIdStars) => {
         const copyMovie = movie;

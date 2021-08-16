@@ -4,8 +4,6 @@ export default class SwapiService {
   _apiKey = "864cd2acdebdfd281550947ea6066439";
 
   async getGuestSessionId() {
-    // eslint-disable-next-line no-console
-    console.log("getGuestSessionId");
     const guestSession = await this.getResource(
       // eslint-disable-next-line no-underscore-dangle
       `/3/authentication/guest_session/new?api_key=${this._apiKey}`
@@ -15,10 +13,7 @@ export default class SwapiService {
   }
 
   async postRate(stars, idMovie, guestSessionId) {
-    // eslint-disable-next-line no-console
-    console.log("postRate");
     const guestSession = guestSessionId;
-    // console.log(guestSession);
     const res = await fetch(
       // eslint-disable-next-line no-underscore-dangle
       `${this._apiBase}/3/movie/${idMovie}/rating?api_key=${this._apiKey}&guest_session_id=${guestSession}`,
@@ -36,8 +31,6 @@ export default class SwapiService {
   }
 
   async getResource(url) {
-    // eslint-disable-next-line no-console
-    console.log("getResource");
     // eslint-disable-next-line no-underscore-dangle
     const res = await fetch(`${this._apiBase}${url}`);
     if (!res.ok) {
@@ -48,8 +41,6 @@ export default class SwapiService {
   }
 
   async getSearchMovies(query = "return", page = 1) {
-    // eslint-disable-next-line no-console
-    console.log("getSearchMovies");
     const res = await this.getResource(
       // eslint-disable-next-line no-underscore-dangle
       `/3/search/movie?api_key=${this._apiKey}&query=${query}&page=${page}`
@@ -58,8 +49,6 @@ export default class SwapiService {
   }
 
   async getRateMovie(guestSessionId, page = 1) {
-    // eslint-disable-next-line no-console
-    console.log("getRateMovie");
     const res = await this.getResource(
       // eslint-disable-next-line no-underscore-dangle
       `/3/guest_session/${guestSessionId}/rated/movies?api_key=${this._apiKey}&sort_by=created_at.asc&page=${page}`
@@ -68,8 +57,6 @@ export default class SwapiService {
   }
 
   getAllGenres = async () => {
-    // eslint-disable-next-line no-console
-    console.log("getAllGenres");
     const res = await this.getResource(
       // eslint-disable-next-line no-underscore-dangle
       `/3/genre/movie/list?api_key=${this._apiKey}`

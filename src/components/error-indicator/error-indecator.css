@@ -12,10 +12,6 @@
     color: #ff4465;
 }
 
-.error-indicator span{
-    /*color: chocolate;*/
-}
-
 .error-indicator .icon{
     width: 100px;
 }
