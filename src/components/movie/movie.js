@@ -38,19 +38,30 @@ export default class Movie extends PureComponent {
   constructor(props) {
     super(props);
     this.pRef = React.createRef();
+    this.titleRef = React.createRef();
   }
 
   componentDidMount() {
     this.setMovie();
     this.correctText();
+    this.correctTitle();
   }
 
   correctText = () => {
-    const letterCount = Math.floor(this.pRef.current.offsetHeight / 18) * 30;
+    let letterCount = Math.floor(this.pRef.current.offsetHeight / 18) * 30;
+    if (letterCount === 0) {
+      letterCount += 20;
+    }
     this.pRef.current.textContent = this.trimText(
       this.pRef.current.textContent,
       letterCount
     );
+  };
+
+  correctTitle = () => {
+    if (this.titleRef.current.textContent.length > 32) {
+      this.titleRef.current.style.fontSize = "17px";
+    }
   };
 
   setMovie() {
@@ -138,7 +149,7 @@ export default class Movie extends PureComponent {
             <div>{vote_average}</div>
           </div>
           {/* eslint-disable-next-line camelcase */}
-          <h1>{original_title}</h1>
+          <h1 ref={this.titleRef}>{original_title}</h1>
           <div className="date">{this.checkDate(release_date)}</div>
           {/* eslint-disable-next-line camelcase */}
           <Genres allGenres={this.props.allGenres} movieGenres={genre_ids} />

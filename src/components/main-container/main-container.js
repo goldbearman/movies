@@ -139,12 +139,12 @@ export default class MainContainer extends PureComponent {
         <TabPane tab="Rated" key="2">
           <MovieList
             arrMovies={this.state.rateMovie}
-            loading={this.state.loadingRate}
-            error={this.state.errorRate}
             page={this.state.pageRate}
+            loading={this.state.loadingRate}
             guestSessionId={guestSessionId}
-            isRateMovie={true}
+            error={this.state.errorRate}
             allGenres={this.state.allGenres}
+            isRateMovie={true}
           />
           <div className="pagination-container">
             {error ? null : (

@@ -1,7 +1,8 @@
 import React, { PureComponent } from "react";
 
 import "./app.css";
-import MainContainer from "../main-container/main-container";
+// import MainContainer from "../main-container/main-container";
+import MainContainerChange from "../main-container/main-container-change";
 import SwapiService from "../../services/swapi-service";
 import { SwapiServiceProvider } from "../../swapi-service-context/swapi-service-context";
 
@@ -73,7 +74,7 @@ export default class App extends PureComponent {
       <section className="container">
         <SwapiServiceProvider value={this.swapiService}>
           <main className="header">
-            <MainContainer
+            <MainContainerChange
               arrMovies={arrMovies}
               loading={loading}
               error={error}
